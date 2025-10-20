@@ -1,0 +1,18 @@
+Departamento Seguro de Saude 
+Codigo 001 
+Departamento Seguro Residencial 
+Codigo 002 
+Nome William 
+Departamento Seguro de Saude 
+Cargo Vendedor 
+Venda 15000 
+Salario 3500 
+Nome Adriano 
+Departamento Seguro de Saude 
+Cargo Vendedor
+Venda 85000 
+Salario 17500 
+Nome Victor 
+Departamento Seguro Residencial 
+Cargo Gerente 
+Salario 21000 
