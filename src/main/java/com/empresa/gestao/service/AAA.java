@@ -1,10 +1,15 @@
 package com.empresa.gestao.service;
 
+import com.empresa.gestao.business.AplicarBonus;
 import com.empresa.gestao.domain.Departamento;
+import com.empresa.gestao.domain.Funcionario;
+import com.empresa.gestao.domain.Gerente;
 import com.empresa.gestao.domain.Vendedor;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +25,7 @@ public class AAA {
             while ((linha = bufferedReader.readLine()) != null){
                 String linhaTratada = linha;
                 if (!linhaTratada.isEmpty()){
-                    sb.append(linhaTratada);
+                    sb.append(linhaTratada).append(" ");
                 }
             }
 
@@ -30,31 +35,99 @@ public class AAA {
 
         String dadosCompletos = sb.toString().trim();
 
-        String regex = "Nome\\s(.*?)Departamento\\s(.*?)\\sCodigo\\s(.*?)\\sCargo\\s(.*?)\\s(?:Venda\\s(.*?)\\s)?Salario\\s(.*?)\\s";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(dadosCompletos);
+//        regex de busca dep
+        String regexDept = "Departamento\\s*(.*?)\\s*Codigo\\s*(\\d+)";
+        Pattern patternDept = Pattern.compile(regexDept);
+        Matcher matcherDept = patternDept.matcher(dadosCompletos);
 
-        System.out.println("Olha o que vem completo: ." + dadosCompletos + ".\n\n");
-        while (matcher.find()){
-            String nome = matcher.group(1).trim();
-            String departamento = matcher.group(2).trim();
-            String codigo = matcher.group(3).trim();
-            String cargo = matcher.group(4).trim();
+        Set<Departamento> departamentosEncontrados = new HashSet<>();
 
-            double venda = matcher.group(5) != null ? Double.parseDouble(matcher.group(4).trim()) : 0.0;
-            double salario = matcher.group(6) != null ? Double.parseDouble(matcher.group(5).trim()) : 0.0;
+        while (matcherDept.find()) {
+            String nomeDepartamento = matcherDept.group(1).trim();
+            int codigo = Integer.parseInt(matcherDept.group(2).trim());
 
+            departamentosEncontrados.add(new Departamento(nomeDepartamento, codigo));
+        }
 
+//        regex de busca func
+        String regexFunc = "Nome\\s(.*?)Departamento\\s(.*?)\\sCargo\\s(.*?)\\s(?:Venda\\s(.*?)\\s)?Salario\\s(.*?)(?:\\s|$)";
+        Pattern patternFunc = Pattern.compile(regexFunc);
+        Matcher matcherFunc = patternFunc.matcher(dadosCompletos);
+
+        Set<Funcionario> funcionariosEncontrados = new HashSet<>();
+
+        while (matcherFunc.find()){
+            String nome = matcherFunc.group(1).trim();
+            String departamento = matcherFunc.group(2).trim();
+            String cargo = matcherFunc.group(3).trim();
+
+            double venda = matcherFunc.group(4) != null ? Double.parseDouble(matcherFunc.group(4).trim()) : 0.0;
+            double salario = matcherFunc.group(5) != null ? Double.parseDouble(matcherFunc.group(5).trim()) : 0.0;
+
+            for (Departamento dep : departamentosEncontrados) {
+
+                if (dep.getNome().equalsIgnoreCase(departamento)){
+                    if (cargo.equalsIgnoreCase("Gerente")){
+                        Gerente gerente = new Gerente(nome, cargo, salario, dep);
+                        funcionariosEncontrados.add(gerente);;
+                    }
+                    if (cargo.equalsIgnoreCase("Vendedor")){
+                        Vendedor vendedor = new Vendedor(nome, cargo, salario, dep, venda);
+                        funcionariosEncontrados.add(vendedor);
+                        dep.addFunc(vendedor);
+                    }
+                }
+            }
 
         }
 
+        System.out.println("FUNCIONÁRIOS");
+        for (Funcionario func : funcionariosEncontrados) {
+            System.out.println(func.getNome());
+        }
+
+        System.out.println("DEPARTAMENTOS");
+        for (Departamento dep : departamentosEncontrados) {
+            System.out.println(dep.getNome());
+        }
+
+        Departamento departamentoCampeaoEncontrado = calcularVendasDep(departamentosEncontrados);
+
+        AplicarBonus aplicarBonus = new AplicarBonus();
+
+        for (Vendedor vendedor : departamentoCampeaoEncontrado.getVendedores()) {
+            aplicarBonus.aplicarBonusDestaque(vendedor);
+            System.out.println("Aplicado bônus no vendedor: " + vendedor.getNome() + " com sucesso!");
+        }
 
     }
+
+    public static Departamento calcularVendasDep(Set<Departamento> departamentos){
+        Departamento departamentoCampeao = null;
+
+        for (Departamento departamento : departamentos) {
+            double vendas = 0.0;
+            double vencedor = 0.0;
+
+            for (Vendedor vendedor : departamento.getVendedores()) {
+                vendas += vendedor.getVenda();
+            }
+            System.out.println("Total de vendas do Departamento: " + departamento.getNome() + " R$: " + vendas);
+            if (vendas > vencedor){
+                vencedor = vendas;
+                departamentoCampeao = departamento;
+            }
+        }
+        if (departamentoCampeao != null){
+            departamentoCampeao.setCampeao(true);
+            System.out.println("DEPARTAMENTO CAMPEÃO FOI: " + departamentoCampeao.getNome());
+        }
+        return departamentoCampeao;
+    }
+
+
+
 }
-
-
-
-
 
 
 

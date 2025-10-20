@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Gerente extends Funcionario {
 
-    public Gerente(String nome, String cargo, double salario, Departamento departamento, double bonus) {
+    public Gerente(String nome, String cargo, double salario, Departamento departamento) {
         super(nome, cargo, salario, departamento);
     }
 
