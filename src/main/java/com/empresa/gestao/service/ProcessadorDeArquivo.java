@@ -16,6 +16,7 @@ public class ProcessadorDeArquivo {
         FuncionarioService funcionarioService = new FuncionarioService();
         ExtrairDados extrairDados = new ExtrairDados();
         LeitorArquivo leitorArquivo = new LeitorArquivo();
+        AplicarBonus aplicarBonus = new AplicarBonus();
 
         Path caminho = Path.of("C:/Users/helio/OneDrive/Área de Trabalho/gestao/src/main/java/com/empresa/gestao/doc", "teste.txt");
 
@@ -23,17 +24,17 @@ public class ProcessadorDeArquivo {
         Set<Departamento> departamentos = extrairDados.extrairDepartamentos(dadosCompletos);
         Set<Funcionario> funcionarios = extrairDados.extrairFuncionarios(departamentos, dadosCompletos);
 
+        System.out.println("Departamentos: ");
         departamentoService.imprimirDepartamento(departamentos);
+        System.out.println("\nFuncionários: ");
         funcionarioService.imprimirFuncionarios(funcionarios);
+
+        System.out.println("-------------------------------------");
 
         Departamento departamentoCampeao = departamentoService.calcularVendasDepartamentoCampeao(departamentos);
 
-        AplicarBonus aplicarBonus = new AplicarBonus();
 
-        for (Vendedor vendedor : departamentoCampeao.getVendedores()) {
-            aplicarBonus.aplicarBonusDestaque(vendedor);
-            System.out.println("Aplicado bônus no vendedor: " + vendedor.getNome() + " com sucesso!");
-        }
+        AplicarBonusService.aplicarBonusVendedores(departamentoCampeao.getVendedores());
 
     }
 

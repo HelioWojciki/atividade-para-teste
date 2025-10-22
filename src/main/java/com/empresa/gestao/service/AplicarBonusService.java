@@ -1,0 +1,20 @@
+package com.empresa.gestao.service;
+
+import com.empresa.gestao.business.AplicarBonus;
+import com.empresa.gestao.domain.Vendedor;
+
+import java.util.Set;
+
+public class AplicarBonusService {
+
+    public static void aplicarBonusVendedores(Set<Vendedor> vendedores) {
+        AplicarBonus aplicarBonus = new AplicarBonus();
+
+        vendedores.forEach(vendedor -> {
+            double bonus = aplicarBonus.aplicarBonusDestaque(vendedor);
+            if (bonus > 0) {
+                System.out.println("Bônus aplicado no vendedor: " + vendedor.getNome());
+            }
+        });
+    }
+}

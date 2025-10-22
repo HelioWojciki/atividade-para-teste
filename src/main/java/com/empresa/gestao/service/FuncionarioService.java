@@ -3,7 +3,6 @@ package com.empresa.gestao.service;
 import com.empresa.gestao.domain.Funcionario;
 
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class FuncionarioService {

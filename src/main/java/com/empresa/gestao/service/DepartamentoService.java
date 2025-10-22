@@ -28,8 +28,6 @@ public class DepartamentoService {
                     .mapToDouble(Vendedor::getVenda)
                     .sum();
 
-            System.out.println("Total de vendas do Departamento: " + dep.getNome() + " R$: " + totalVendas);
-
             if (totalVendas > maiorVenda){
                 departamentoCampeao = dep;
             }
@@ -37,7 +35,6 @@ public class DepartamentoService {
 
         if (departamentoCampeao != null){
             departamentoCampeao.setCampeao(true);
-            System.out.println("DEPARTAMENTO CAMPEÃO FOI: " + departamentoCampeao.getNome());
         }
         return departamentoCampeao;
     }
