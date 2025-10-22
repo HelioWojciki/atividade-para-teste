@@ -13,27 +13,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AAA {
+public class ProcessadorDeArquivo {
     public static void main(String[] args) {
-        Path path = Path.of("C:/Users/helio/OneDrive/Área de Trabalho/gestao/src/main/java/com/empresa/gestao/doc", "teste.txt");
-        StringBuilder sb = new StringBuilder();
-
-        try (   FileReader fileReader = new FileReader(String.valueOf(path));
-                BufferedReader bufferedReader = new BufferedReader(fileReader)  ){
-
-            String linha;
-            while ((linha = bufferedReader.readLine()) != null){
-                String linhaTratada = linha;
-                if (!linhaTratada.isEmpty()){
-                    sb.append(linhaTratada).append(" ");
-                }
-            }
-
-        } catch (IOException e) {
-            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
-        }
-
-        String dadosCompletos = sb.toString().trim();
+        Path caminho = Path.of("C:/Users/helio/OneDrive/Área de Trabalho/gestao/src/main/java/com/empresa/gestao/doc", "teste.txt");
+        String dadosCompletos = LeitorArquivo.lerArquivo(caminho);
 
 //        regex de busca dep
         String regexDept = "Departamento\\s*(.*?)\\s*Codigo\\s*(\\d+)";
@@ -81,15 +64,6 @@ public class AAA {
 
         }
 
-        System.out.println("FUNCIONÁRIOS");
-        for (Funcionario func : funcionariosEncontrados) {
-            System.out.println(func.getNome());
-        }
-
-        System.out.println("DEPARTAMENTOS");
-        for (Departamento dep : departamentosEncontrados) {
-            System.out.println(dep.getNome());
-        }
 
         Departamento departamentoCampeaoEncontrado = calcularVendasDep(departamentosEncontrados);
 
