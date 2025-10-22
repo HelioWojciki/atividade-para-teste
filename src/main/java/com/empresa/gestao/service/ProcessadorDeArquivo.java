@@ -6,7 +6,6 @@ import com.empresa.gestao.domain.Funcionario;
 import com.empresa.gestao.domain.Gerente;
 import com.empresa.gestao.domain.Vendedor;
 
-import java.io.*;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,18 +18,7 @@ public class ProcessadorDeArquivo {
         String dadosCompletos = LeitorArquivo.lerArquivo(caminho);
 
 //        regex de busca dep
-        String regexDept = "Departamento\\s*(.*?)\\s*Codigo\\s*(\\d+)";
-        Pattern patternDept = Pattern.compile(regexDept);
-        Matcher matcherDept = patternDept.matcher(dadosCompletos);
-
-        Set<Departamento> departamentosEncontrados = new HashSet<>();
-
-        while (matcherDept.find()) {
-            String nomeDepartamento = matcherDept.group(1).trim();
-            int codigo = Integer.parseInt(matcherDept.group(2).trim());
-
-            departamentosEncontrados.add(new Departamento(nomeDepartamento, codigo));
-        }
+        Set<Departamento> departamentosEncontrados = ExtrairDados.extrairDepartamentos(dadosCompletos);
 
 //        regex de busca func
         String regexFunc = "Nome\\s(.*?)Departamento\\s(.*?)\\sCargo\\s(.*?)\\s(?:Venda\\s(.*?)\\s)?Salario\\s(.*?)(?:\\s|$)";
