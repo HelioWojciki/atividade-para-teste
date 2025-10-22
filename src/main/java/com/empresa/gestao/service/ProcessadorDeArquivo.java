@@ -16,7 +16,7 @@ public class ProcessadorDeArquivo {
         FuncionarioService funcionarioService = new FuncionarioService();
         ExtrairDados extrairDados = new ExtrairDados();
         LeitorArquivo leitorArquivo = new LeitorArquivo();
-        AplicarBonus aplicarBonus = new AplicarBonus();
+        AplicarBonusService aplicarBonusService = new AplicarBonusService();
 
         Path caminho = Path.of("C:/Users/helio/OneDrive/Área de Trabalho/gestao/src/main/java/com/empresa/gestao/doc", "teste.txt");
 
@@ -33,20 +33,8 @@ public class ProcessadorDeArquivo {
 
         Departamento departamentoCampeao = departamentoService.calcularVendasDepartamentoCampeao(departamentos);
 
-
-        AplicarBonusService.aplicarBonusVendedores(departamentoCampeao.getVendedores());
+        aplicarBonusService.aplicarBonusVendedores(departamentoCampeao.getVendedores());
 
     }
 
-
-
 }
-
-
-
-
-
-
-
-
-

@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class AplicarBonusService {
 
-    public static void aplicarBonusVendedores(Set<Vendedor> vendedores) {
+    public void aplicarBonusVendedores(Set<Vendedor> vendedores) {
         AplicarBonus aplicarBonus = new AplicarBonus();
 
         vendedores.forEach(vendedor -> {
