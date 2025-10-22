@@ -2,9 +2,11 @@ package com.empresa.gestao.service;
 
 import com.empresa.gestao.business.AplicarBonus;
 import com.empresa.gestao.domain.Vendedor;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class AplicarBonusService {
 
     public void aplicarBonusVendedores(Set<Vendedor> vendedores) {

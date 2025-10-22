@@ -1,10 +1,13 @@
-package com.empresa.gestao.service;
+package com.empresa.gestao.util;
+
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 
+@Component
 public class LeitorArquivo {
 
     public String lerArquivo(Path caminho){

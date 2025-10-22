@@ -2,10 +2,12 @@ package com.empresa.gestao.service;
 
 import com.empresa.gestao.domain.Departamento;
 import com.empresa.gestao.domain.Vendedor;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class DepartamentoService {
 
     public static Set<String> getNome(Set<Departamento> departamentos) {

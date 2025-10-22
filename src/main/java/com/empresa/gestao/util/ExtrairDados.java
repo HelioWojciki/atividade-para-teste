@@ -1,15 +1,17 @@
-package com.empresa.gestao.service;
+package com.empresa.gestao.util;
 
 import com.empresa.gestao.domain.Departamento;
 import com.empresa.gestao.domain.Funcionario;
 import com.empresa.gestao.domain.Gerente;
 import com.empresa.gestao.domain.Vendedor;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class ExtrairDados {
 
     public Set<Departamento> extrairDepartamentos(String texto) {
