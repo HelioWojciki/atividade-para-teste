@@ -7,7 +7,7 @@ import java.nio.file.Path;
 
 public class LeitorArquivo {
 
-    public static String lerArquivo(Path caminho){
+    public String lerArquivo(Path caminho){
         StringBuilder conteudoArquivo = new StringBuilder();
 
         try (FileReader fileReader = new FileReader(String.valueOf(caminho));
